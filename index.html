@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wery</title>
+    
+</head>
+
+
+
+<body>
+    <div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="employee.html">Home</a>
+                </li>
+                <li>
+                    <a href="search.html">Search</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div id="container"></div>
+</body>
+
+
+<script>
+    name = localStorage.getItem('id')
+    console.log(name)
+    async function getclick(x) {
+        url = `https://api.openbrewerydb.org/breweries?by_name=${x}&per_page=1`
+
+        try {
+            data = await fetch(url)
+                .then((x) => x.json())
+                .then((y) => dispbrew(y))
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
+    getclick(name)
+    function dispbrew(x) {
+        x.forEach(element => {
+            console.log(element)
+            var div = document.createElement("div")
+            div.class = 'bre'
+            div.innerHTML = `
+<h2> Name: ${element.name}</h2>
+<h2> Type: ${element.brewery_type}</h2>
+<h2>City: ${element.city}</h2>
+<h2> State: ${element.state}</h2>
+<h2> Country: ${element.country}</h2>
+<h2>Street: ${element.street}</h2>
+<h2>Phone: ${element.phone}</h2>
+<h2>Postal code: ${element.postal_code}</h2>
+<a href=${element.website_url}>Website</a>
+`
+            document.getElementById("container").append(div)
+            container.style.backgroundColor = 'rgb(167, 208, 209)'
+            container.style.marginTop = "125px";
+            container.style.paddingTop = "30px";
+            container.style.height = "480px";
+            container.style.marginLeft = "450px";
+            container.style.width = "500px";
+        });
+
+    }
+</script>
+
+</html>

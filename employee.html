@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    
+
+
+</head>
+
+
+
+<body>
+    <div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="employee.html">Home</a>
+                </li>
+                <li>
+                    <a href="search.html">Search</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div id="container"></div>
+
+</body>
+
+
+<script>
+
+    var url = 'https://api.openbrewerydb.org/breweries?page=1&per_page=100'
+    brew()
+    async function brew() {
+        try {
+            var date = await fetch(url)
+                .then((x) => x.json())
+                .then((y) => dispbrew(y))
+
+        }
+        catch (err) {
+            console.log(err)
+        }
+
+    }
+
+    function dispbrew(x) {
+        x.forEach(element => {
+            console.log(element)
+            var div = document.createElement("div")
+            div.class = 'bre'
+            div.innerHTML = `
+<h2>${element.name}</h2>
+<h2>${element.brewery_type}</h2>
+<h2>${element.city}</h2>
+<h2>${element.state}</h2>`
+
+
+            button = document.createElement('button')
+            button.innerHTML = "More Details"
+            button.class = 'san'
+            button.addEventListener('click', () => {
+                localStorage.setItem('id', element.name)
+                window.location.href = './brewery.html'
+            })
+            div.appendChild(button)
+            document.getElementById("container").append(div)
+        });
+
+    }
+
+</script>
+
+
+</html>
